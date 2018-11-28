@@ -1,31 +1,31 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { withRouter } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import TextFieldGroup from '../common/TextFieldGroup';
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-import InputGroup from '../common/InputGroup';
-import SelectListGroup from '../common/SelectListGroup';
-import { createProfile } from '../../actions/profileActions';
+import React, { Component } from "react";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import PropTypes from "prop-types";
+import TextFieldGroup from "../common/TextFieldGroup";
+import TextAreaFieldGroup from "../common/TextAreaFieldGroup";
+import InputGroup from "../common/InputGroup";
+import SelectListGroup from "../common/SelectListGroup";
+import { createProfile } from "../../actions/profileActions";
 
 class CreateProfile extends Component {
   constructor(props) {
     super(props);
     this.state = {
       displaySocialInputs: false,
-      handle: '',
-      company: '',
-      website: '',
-      location: '',
-      status: '',
-      skills: '',
-      githubusername: '',
-      bio: '',
-      twitter: '',
-      facebook: '',
-      linkedin: '',
-      youtube: '',
-      instagram: '',
+      handle: "",
+      school: "",
+      website: "",
+      location: "",
+      status: "",
+      skills: "",
+      githubusername: "",
+      bio: "",
+      twitter: "",
+      facebook: "",
+      linkedin: "",
+      youtube: "",
+      instagram: "",
       errors: {}
     };
 
@@ -44,7 +44,7 @@ class CreateProfile extends Component {
 
     const profileData = {
       handle: this.state.handle,
-      company: this.state.company,
+      school: this.state.school,
       website: this.state.website,
       location: this.state.location,
       status: this.state.status,
@@ -123,15 +123,13 @@ class CreateProfile extends Component {
 
     // Select options for status
     const options = [
-      { label: '* Select Professional Status', value: 0 },
-      { label: 'Developer', value: 'Developer' },
-      { label: 'Junior Developer', value: 'Junior Developer' },
-      { label: 'Senior Developer', value: 'Senior Developer' },
-      { label: 'Manager', value: 'Manager' },
-      { label: 'Student or Learning', value: 'Student or Learning' },
-      { label: 'Instructor or Teacher', value: 'Instructor or Teacher' },
-      { label: 'Intern', value: 'Intern' },
-      { label: 'Other', value: 'Other' }
+      { label: "* Select Professional Status", value: 0 },
+      { label: "PhD", value: "PhD" },
+      { label: "Assistant Professor", value: "Assistant Professor" },
+      { label: "Associate Professor", value: "Associate Professor" },
+      { label: "Professor", value: "Professor" },
+      { label: "Student", value: "Student" },
+      { label: "Other", value: "Other" }
     ];
 
     return (
@@ -151,7 +149,7 @@ class CreateProfile extends Component {
                   value={this.state.handle}
                   onChange={this.onChange}
                   error={errors.handle}
-                  info="A unique handle for your profile URL. Your full name, company name, nickname"
+                  info="A unique handle for your profile URL. Your full name, school, nickname"
                 />
                 <SelectListGroup
                   placeholder="Status"
@@ -163,12 +161,12 @@ class CreateProfile extends Component {
                   info="Give us an idea of where you are at in your career"
                 />
                 <TextFieldGroup
-                  placeholder="Company"
-                  name="company"
-                  value={this.state.company}
+                  placeholder="School"
+                  name="school"
+                  value={this.state.school}
                   onChange={this.onChange}
-                  error={errors.company}
-                  info="Could be your own company or one you work for"
+                  error={errors.school}
+                  info="Your own school"
                 />
                 <TextFieldGroup
                   placeholder="Website"
@@ -176,7 +174,7 @@ class CreateProfile extends Component {
                   value={this.state.website}
                   onChange={this.onChange}
                   error={errors.website}
-                  info="Could be your own website or a company one"
+                  info="Could be your own website or a school one"
                 />
                 <TextFieldGroup
                   placeholder="Location"
@@ -193,7 +191,7 @@ class CreateProfile extends Component {
                   onChange={this.onChange}
                   error={errors.skills}
                   info="Please use comma separated values (eg.
-                    HTML,CSS,JavaScript,PHP"
+                    Organic Chemistry,Curriculum,Teaching)"
                 />
                 <TextFieldGroup
                   placeholder="Github Username"
@@ -251,6 +249,7 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { createProfile })(
-  withRouter(CreateProfile)
-);
+export default connect(
+  mapStateToProps,
+  { createProfile }
+)(withRouter(CreateProfile));

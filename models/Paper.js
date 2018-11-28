@@ -24,36 +24,76 @@ const PaperSchema = new Schema({
     type: String,
     required: true
   },
-  likes: [
+  company: {
+    type: String
+  },
+  website: {
+    type: String
+  },
+  location: {
+    type: String
+  },
+  status: {
+    type: String,
+    required: true
+  },
+  skills: {
+    type: [String],
+    required: true
+  },
+  bio: {
+    type: String
+  },
+  githubusername: {
+    type: String
+  },
+  comment: [
     {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users"
-      }
-    }
-  ],
-  comments: [
-    {
-      user: {
-        type: Schema.Types.ObjectId,
-        ref: "users"
-      },
-      text: {
+      title: {
         type: String,
         required: true
       },
-      name: {
+      company: {
+        type: String,
+        required: true
+      },
+      location: {
         type: String
       },
-      avatar: {
-        type: String
-      },
-      date: {
+      from: {
         type: Date,
-        default: Date.now
+        required: true
+      },
+      to: {
+        type: Date
+      },
+      current: {
+        type: Boolean,
+        default: false
+      },
+      description: {
+        type: String
       }
     }
   ],
+
+  social: {
+    youtube: {
+      type: String
+    },
+    twitter: {
+      type: String
+    },
+    facebook: {
+      type: String
+    },
+    linkedin: {
+      type: String
+    },
+    instagram: {
+      type: String
+    }
+  },
   date: {
     type: Date,
     default: Date.now

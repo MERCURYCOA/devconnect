@@ -2,15 +2,14 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { getCurrentProfile, deleteAccount } from "../../actions/profileActions";
+import { getCurrentPaper, deleteAccount } from "../../actions/paperActions";
 import Spinner from "../common/Spinner";
-import ProfileActions from "./ProfileActions";
-import Experience from "./Experience";
-import Education from "./Education";
+import PaperActions from "./PaperActions";
+import Comment from "./Comment";
 
-class Dashboard extends Component {
+class Mypaper extends Component {
   componentDidMount() {
-    this.props.getCurrentProfile();
+    this.props.getCurrentPaper();
   }
 
   onDeleteClick(e) {
@@ -19,23 +18,22 @@ class Dashboard extends Component {
 
   render() {
     const { user } = this.props.auth;
-    const { profile, loading } = this.props.profile;
+    const { paper, loading } = this.props.paper;
 
-    let dashboardContent;
+    let mypaperContent;
 
-    if (profile === null || loading) {
-      dashboardContent = <Spinner />;
+    if (paper === null || loading) {
+      mypaperContent = <Spinner />;
     } else {
       // Check if logged in user has profile data
       if (Object.keys(profile).length > 0) {
-        dashboardContent = (
+        mypaperContent = (
           <div>
             <p className="lead text-muted">
               Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
             </p>
-            <ProfileActions />
-            <Experience experience={profile.experience} />
-            <Education education={profile.education} />
+            <PaperActions />
+            <Comment comment={paper.comment} />
             <div style={{ marginBottom: "60px" }} />
             <button
               onClick={this.onDeleteClick.bind(this)}
@@ -47,12 +45,12 @@ class Dashboard extends Component {
         );
       } else {
         // User is logged in but has no profile
-        dashboardContent = (
+        mypaperContent = (
           <div>
             <p className="lead text-muted">Welcome {user.name}</p>
-            <p>You have not yet setup a profile, please add some info</p>
-            <Link to="/create-profile" className="btn btn-lg btn-info">
-              Create Profile
+            <p>You have not yet upload paper, please add some paper</p>
+            <Link to="/create-paper" className="btn btn-lg btn-info">
+              Upload Paper
             </Link>
           </div>
         );
@@ -60,12 +58,12 @@ class Dashboard extends Component {
     }
 
     return (
-      <div className="dashboard">
+      <div className="mypaper">
         <div className="container">
           <div className="row">
             <div className="col-md-12">
-              <h1 className="display-4">Dashboard</h1>
-              {dashboardContent}
+              <h1 className="display-4">My paper</h1>
+              {mypaperContent}
             </div>
           </div>
         </div>
@@ -74,19 +72,19 @@ class Dashboard extends Component {
   }
 }
 
-Dashboard.propTypes = {
-  getCurrentProfile: PropTypes.func.isRequired,
+Mypaper.propTypes = {
+  getCurrentPaper: PropTypes.func.isRequired,
   deleteAccount: PropTypes.func.isRequired,
   auth: PropTypes.object.isRequired,
-  profile: PropTypes.object.isRequired
+  paper: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
+  paper: state.paper,
   auth: state.auth
 });
 
 export default connect(
   mapStateToProps,
-  { getCurrentProfile, deleteAccount }
-)(Dashboard);
+  { getCurrentPaper, deleteAccount }
+)(Mypaper);
