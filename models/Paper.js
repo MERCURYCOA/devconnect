@@ -11,19 +11,19 @@ const PaperSchema = new Schema({
     type: String,
     required: true
   },
-  uploader: {
-    type: String,
-    required: true
-  },
-  filePath: {
-    type: String,
-    required: true,
-    trim: true
-  },
-  fileName: {
-    type: String,
-    required: true
-  },
+  // uploader: {
+  //   type: String,
+  //   required: true
+  // },
+  // filePath: {
+  //   type: String,
+  //   required: true,
+  //   trim: true
+  // },
+  // fileName: {
+  //   type: String,
+  //   required: true
+  // },
   company: {
     type: String
   },

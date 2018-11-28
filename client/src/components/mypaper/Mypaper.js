@@ -26,11 +26,11 @@ class Mypaper extends Component {
       mypaperContent = <Spinner />;
     } else {
       // Check if logged in user has profile data
-      if (Object.keys(profile).length > 0) {
+      if (Object.keys(paper).length > 0) {
         mypaperContent = (
           <div>
             <p className="lead text-muted">
-              Welcome <Link to={`/profile/${profile.handle}`}>{user.name}</Link>
+              Welcome <Link to={`/profile/${paper.handle}`}>{user.name}</Link>
             </p>
             <PaperActions />
             <Comment comment={paper.comment} />

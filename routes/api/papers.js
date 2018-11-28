@@ -192,7 +192,8 @@ router.post(
         description: req.body.description
       };
 
-      // Add to exp array
+      // Add to comment array
+
       paper.comment.unshift(newComment);
 
       paper.save().then(paper => res.json(paper));

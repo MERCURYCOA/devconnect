@@ -1,49 +1,53 @@
 import React, { Component } from "react";
 import Moment from "react-moment";
+import isEmpty from "../../validation/is-empty";
 
 class PaperCreds extends Component {
   render() {
-    const { comment } = this.props;
-
-    const expItems = comment.map(exp => (
-      <li key={exp._id} className="list-group-item">
-        <h4>{exp.company}</h4>
-        <p>
-          <Moment format="YYYY/MM/DD">{exp.from}</Moment> -
-          {exp.to === null ? (
-            " Now"
-          ) : (
-            <Moment format="YYYY/MM/DD">{exp.to}</Moment>
-          )}
-        </p>
-        <p>
-          <strong>Position:</strong> {exp.title}
-        </p>
-        <p>
-          {exp.location === "" ? null : (
-            <span>
-              <strong>Location: </strong> {exp.location}
-            </span>
-          )}
-        </p>
-        <p>
-          {exp.description === "" ? null : (
-            <span>
-              <strong>Description: </strong> {exp.description}
-            </span>
-          )}
-        </p>
-      </li>
-    ));
+    // const { comment } = this.props;
+    const cmtItems = this.props.comment;
+    if (this.props.comment) {
+      cmtItems.map(cmt => (
+        <li key={cmt._id} className="list-group-item">
+          <h4>{cmt.company}</h4>
+          <p>
+            <Moment format="YYYY/MM/DD">{cmt.from}</Moment> -
+            {cmt.to === null ? (
+              " Present"
+            ) : (
+              <Moment format="YYYY/MM/DD">{cmt.to}</Moment>
+            )}
+          </p>
+          <p>
+            <strong>Position:</strong> {cmt.title}
+          </p>
+          <p>
+            {cmt.location === "" ? null : (
+              <span>
+                <strong>Location: </strong> {cmt.location}
+              </span>
+            )}
+          </p>
+          <p>
+            {cmt.description === "" ? null : (
+              <span>
+                <strong>Description: </strong> {cmt.description}
+              </span>
+            )}
+          </p>
+        </li>
+      ));
+    }
 
     return (
       <div className="row">
         <div className="col-md-6">
           <h3 className="text-center text-info">Comment</h3>
-          {expItems.length > 0 ? (
-            <ul className="list-group">{expItems}</ul>
-          ) : (
+
+          {isEmpty(cmtItems) ? (
             <p className="text-center">No Comment Listed</p>
+          ) : (
+            <ul className="list-group">{cmtItems}</ul>
           )}
         </div>
       </div>

@@ -5,6 +5,8 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
 
+import { clearCurrentPaper } from "./actions/paperActions";
+
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -16,15 +18,19 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
+import Mypaper from "./components/mypaper/Mypaper";
+
 import CreateProfile from "./components/create-profile/CreateProfile";
+import CreatePaper from "./components/create-paper/CreatePaper";
 import EditProfile from "./components/edit-profile/EditProfile";
 import AddExperience from "./components/add-credentials/AddExperience";
+import AddComment from "./components/add-credentials/AddComment";
 import AddEducation from "./components/add-credentials/AddEducation";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import Posts from "./components/posts/Posts";
 import Post from "./components/post/Post";
-import Paper from "./components/paperupload/Paper";
+import Paper from "./components/paper/Paper";
 import Papers from "./components/papers/Papers";
 import NotFound from "./components/not-found/NotFound";
 
@@ -46,6 +52,8 @@ if (localStorage.jwtToken) {
     store.dispatch(logoutUser());
     // Clear current Profile
     store.dispatch(clearCurrentProfile());
+    // Clear current Paper
+    store.dispatch(clearCurrentPaper());
     // Redirect to login
     window.location.href = "/login";
   }
@@ -63,19 +71,31 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profiles" component={Profiles} />
+              <Route exact path="/papers" component={Papers} />
+
               <Route exact path="/profile/:handle" component={Profile} />
 
-              <Route exact path="/papers" component={Papers} />
+              
               <Route exact path="/paper/:handle" component={Paper} />
 
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
               </Switch>
               <Switch>
+                <PrivateRoute exact path="/mypaper" component={Mypaper} />
+              </Switch>
+              <Switch>
                 <PrivateRoute
                   exact
                   path="/create-profile"
                   component={CreateProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/create-paper"
+                  component={CreatePaper}
                 />
               </Switch>
               <Switch>
@@ -90,6 +110,14 @@ class App extends Component {
                   exact
                   path="/add-experience"
                   component={AddExperience}
+                />
+              </Switch>
+
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-comment"
+                  component={AddComment}
                 />
               </Switch>
               <Switch>
