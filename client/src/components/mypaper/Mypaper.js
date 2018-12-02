@@ -25,7 +25,7 @@ class Mypaper extends Component {
     if (paper === null || loading) {
       mypaperContent = <Spinner />;
     } else {
-      // Check if logged in user has profile data
+      // Check if logged in user has paper data
       if (Object.keys(paper).length > 0) {
         mypaperContent = (
           <div>
@@ -44,7 +44,7 @@ class Mypaper extends Component {
           </div>
         );
       } else {
-        // User is logged in but has no profile
+        // User is logged in but has no paper
         mypaperContent = (
           <div>
             <p className="lead text-muted">Welcome {user.name}</p>

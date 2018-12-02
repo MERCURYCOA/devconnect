@@ -6,20 +6,19 @@ const passport = require("passport");
 // Load Validation
 const validatePaperInput = require("../../validation/paper");
 const validateCommentInput = require("../../validation/comment");
-const validateEducationInput = require("../../validation/education");
 
 // Load Paper Model
 const Paper = require("../../models/Paper");
 // Load User Model
 const User = require("../../models/User");
 
-// @route   GET api/profile/test
-// @desc    Tests profile route
+// @route   GET api/paper/test
+// @desc    Tests paper route
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Paper Works" }));
 
-// @route   GET api/profile
-// @desc    Get current users profile
+// @route   GET api/paper
+// @desc    Get current users paper
 // @access  Private
 router.get(
   "/",
@@ -40,8 +39,8 @@ router.get(
   }
 );
 
-// @route   GET api/profile/all
-// @desc    Get all profiles
+// @route   GET api/paper/all
+// @desc    Get all papers
 // @access  Public
 router.get("/all", (req, res) => {
   const errors = {};
@@ -59,8 +58,8 @@ router.get("/all", (req, res) => {
     .catch(err => res.status(404).json({ paper: "There are no papers" }));
 });
 
-// @route   GET api/profile/handle/:handle
-// @desc    Get profile by handle
+// @route   GET api/paper/handle/:handle
+// @desc    Get paper by handle
 // @access  Public
 
 router.get("/handle/:handle", (req, res) => {
@@ -79,8 +78,8 @@ router.get("/handle/:handle", (req, res) => {
     .catch(err => res.status(404).json(err));
 });
 
-// @route   GET api/profile/user/:user_id
-// @desc    Get profile by user ID
+// @route   GET api/paper/user/:user_id
+// @desc    Get paper by user ID
 // @access  Public
 
 router.get("/user/:user_id", (req, res) => {
@@ -119,26 +118,7 @@ router.post(
     // Get fields
     const paperFields = {};
     paperFields.user = req.user.id;
-    if (req.body.handle) paperFields.handle = req.body.handle;
-    if (req.body.company) paperFields.company = req.body.company;
-    if (req.body.website) paperFields.website = req.body.website;
-    if (req.body.location) paperFields.location = req.body.location;
-    if (req.body.bio) paperFields.bio = req.body.bio;
-    if (req.body.status) paperFields.status = req.body.status;
-    if (req.body.githubusername)
-      paperFields.githubusername = req.body.githubusername;
-    // Skills - Spilt into array
-    if (typeof req.body.skills !== "undefined") {
-      paperFields.skills = req.body.skills.split(",");
-    }
-
-    // Social
-    paperFields.social = {};
-    if (req.body.youtube) paperFields.social.youtube = req.body.youtube;
-    if (req.body.twitter) paperFields.social.twitter = req.body.twitter;
-    if (req.body.facebook) paperFields.social.facebook = req.body.facebook;
-    if (req.body.linkedin) paperFields.social.linkedin = req.body.linkedin;
-    if (req.body.instagram) paperFields.social.instagram = req.body.instagram;
+    if (req.body.text) paperFields.handle = req.body.text;
 
     Paper.findOne({ user: req.user.id }).then(paper => {
       if (paper) {
@@ -158,7 +138,7 @@ router.post(
             res.status(400).json(errors);
           }
 
-          // Save Profile
+          // Save Paper
           new Paper(paperFields).save().then(paper => res.json(paper));
         });
       }
@@ -194,7 +174,6 @@ router.post(
 
       // Add to comment array
 
-      // paper.comment.unshift(newComment);
       paper.comment.unshift(newComment);
 
       paper.save().then(paper => res.json(paper));
@@ -202,42 +181,8 @@ router.post(
   }
 );
 
-// @route   POST api/profile/education
-// @desc    Add education to profile
-// @access  Private
-router.post(
-  "/education",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const { errors, isValid } = validateEducationInput(req.body);
-
-    // Check Validation
-    if (!isValid) {
-      // Return any errors with 400 status
-      return res.status(400).json(errors);
-    }
-
-    Profile.findOne({ user: req.user.id }).then(profile => {
-      const newEdu = {
-        school: req.body.school,
-        degree: req.body.degree,
-        fieldofstudy: req.body.fieldofstudy,
-        from: req.body.from,
-        to: req.body.to,
-        current: req.body.current,
-        description: req.body.description
-      };
-
-      // Add to edu array
-      profile.education.unshift(newEdu);
-
-      profile.save().then(profile => res.json(profile));
-    });
-  }
-);
-
-// @route   DELETE api/profile/experience/:exp_id
-// @desc    Delete experience from profile
+// @route   DELETE api/paper/comment/:exp_id
+// @desc    Delete comment from paper
 // @access  Private
 router.delete(
   "/comment/:comment_id",
@@ -257,45 +202,6 @@ router.delete(
         paper.save().then(paper => res.json(paper));
       })
       .catch(err => res.status(404).json(err));
-  }
-);
-
-// @route   DELETE api/profile/education/:edu_id
-// @desc    Delete education from profile
-// @access  Private
-router.delete(
-  "/education/:edu_id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Profile.findOne({ user: req.user.id })
-      .then(profile => {
-        // Get remove index
-        const removeIndex = profile.education
-          .map(item => item.id)
-          .indexOf(req.params.edu_id);
-
-        // Splice out of array
-        profile.education.splice(removeIndex, 1);
-
-        // Save
-        profile.save().then(profile => res.json(profile));
-      })
-      .catch(err => res.status(404).json(err));
-  }
-);
-
-// @route   DELETE api/profile
-// @desc    Delete user and profile
-// @access  Private
-router.delete(
-  "/",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    Paper.findOneAndRemove({ user: req.user.id }).then(() => {
-      User.findOneAndRemove({ _id: req.user.id }).then(() =>
-        res.json({ success: true })
-      );
-    });
   }
 );
 
