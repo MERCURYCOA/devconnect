@@ -13,7 +13,7 @@ import {
 export const getCurrentPaper = () => dispatch => {
   dispatch(setPaperLoading());
   axios
-    .get("/api/papers")
+    .get('/api/paper')
     .then(res =>
       dispatch({
         type: GET_PAPER,
@@ -32,7 +32,7 @@ export const getCurrentPaper = () => dispatch => {
 export const getPaperByHandle = handle => dispatch => {
   dispatch(setPaperLoading());
   axios
-    .get(`/api/papers/handle/${handle}`)
+    .get(`/api/paper/handle/${handle}`)
     .then(res =>
       dispatch({
         type: GET_PAPER,
@@ -50,7 +50,7 @@ export const getPaperByHandle = handle => dispatch => {
 // Create Paper
 export const createPaper = (paperData, history) => dispatch => {
   axios
-    .post("/api/papers", paperData)
+    .post("/api/paper", paperData)
     .then(res => history.push("/mypaper"))
     .catch(err =>
       dispatch({
@@ -63,7 +63,7 @@ export const createPaper = (paperData, history) => dispatch => {
 // Add comment
 export const addComment = (commentData, history) => dispatch => {
   axios
-    .post("/api/papers/comment", commentData)
+    .post("/api/paper/comment", commentData)
     .then(res => history.push("/mypaper"))
     .catch(err =>
       dispatch({
@@ -76,7 +76,7 @@ export const addComment = (commentData, history) => dispatch => {
 // Delete Comment
 export const deleteComment = id => dispatch => {
   axios
-    .delete(`/api/papers/comment/${id}`)
+    .delete(`/api/paper/comment/${id}`)
     .then(res =>
       dispatch({
         type: GET_PAPER,
@@ -95,7 +95,7 @@ export const deleteComment = id => dispatch => {
 export const getPapers = () => dispatch => {
   dispatch(setPaperLoading());
   axios
-    .get("/api/papers/all")
+    .get("/api/paper/all")
     .then(res =>
       dispatch({
         type: GET_PAPERS,
@@ -114,7 +114,7 @@ export const getPapers = () => dispatch => {
 export const deleteAccount = () => dispatch => {
   if (window.confirm("Are you sure? This can NOT be undone!")) {
     axios
-      .delete("/api/papers")
+      .delete("/api/paper")
       .then(res =>
         dispatch({
           type: SET_CURRENT_USER,

@@ -8,8 +8,8 @@ const validatePaperInput = require("../../validation/paper");
 const validateCommentInput = require("../../validation/comment");
 const validateEducationInput = require("../../validation/education");
 
-// Load Profile Model
-const Paper = require("../../models/Profile");
+// Load Paper Model
+const Paper = require("../../models/Paper");
 // Load User Model
 const User = require("../../models/User");
 
@@ -101,14 +101,14 @@ router.get("/user/:user_id", (req, res) => {
     );
 });
 
-// @route   POST api/profile
-// @desc    Create or edit user profile
+// @route   POST api/papers
+// @desc    Create or edit user paper
 // @access  Private
 router.post(
   "/",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const { errors, isValid } = validateProfileInput(req.body);
+    const { errors, isValid } = validatePaperInput(req.body);
 
     // Check Validation
     if (!isValid) {
@@ -117,57 +117,57 @@ router.post(
     }
 
     // Get fields
-    const profileFields = {};
-    profileFields.user = req.user.id;
-    if (req.body.handle) profileFields.handle = req.body.handle;
-    if (req.body.company) profileFields.company = req.body.company;
-    if (req.body.website) profileFields.website = req.body.website;
-    if (req.body.location) profileFields.location = req.body.location;
-    if (req.body.bio) profileFields.bio = req.body.bio;
-    if (req.body.status) profileFields.status = req.body.status;
+    const paperFields = {};
+    paperFields.user = req.user.id;
+    if (req.body.handle) paperFields.handle = req.body.handle;
+    if (req.body.company) paperFields.company = req.body.company;
+    if (req.body.website) paperFields.website = req.body.website;
+    if (req.body.location) paperFields.location = req.body.location;
+    if (req.body.bio) paperFields.bio = req.body.bio;
+    if (req.body.status) paperFields.status = req.body.status;
     if (req.body.githubusername)
-      profileFields.githubusername = req.body.githubusername;
+      paperFields.githubusername = req.body.githubusername;
     // Skills - Spilt into array
     if (typeof req.body.skills !== "undefined") {
-      profileFields.skills = req.body.skills.split(",");
+      paperFields.skills = req.body.skills.split(",");
     }
 
     // Social
-    profileFields.social = {};
-    if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-    if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
-    if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
-    if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-    if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
+    paperFields.social = {};
+    if (req.body.youtube) paperFields.social.youtube = req.body.youtube;
+    if (req.body.twitter) paperFields.social.twitter = req.body.twitter;
+    if (req.body.facebook) paperFields.social.facebook = req.body.facebook;
+    if (req.body.linkedin) paperFields.social.linkedin = req.body.linkedin;
+    if (req.body.instagram) paperFields.social.instagram = req.body.instagram;
 
     Paper.findOne({ user: req.user.id }).then(paper => {
       if (paper) {
         // Update
         Paper.findOneAndUpdate(
           { user: req.user.id },
-          { $set: profileFields },
+          { $set: paperFields },
           { new: true }
         ).then(paper => res.json(paper));
       } else {
         // Create
 
         // Check if handle exists
-        Paper.findOne({ handle: profileFields.handle }).then(paper => {
+        Paper.findOne({ handle: paperFields.handle }).then(paper => {
           if (paper) {
             errors.handle = "That handle already exists";
             res.status(400).json(errors);
           }
 
           // Save Profile
-          new Paper(profileFields).save().then(paper => res.json(paper));
+          new Paper(paperFields).save().then(paper => res.json(paper));
         });
       }
     });
   }
 );
 
-// @route   POST api/profile/experience
-// @desc    Add experience to profile
+// @route   POST api/paper/comment
+// @desc    Add comment to paper
 // @access  Private
 router.post(
   "/comment",
@@ -194,6 +194,7 @@ router.post(
 
       // Add to comment array
 
+      // paper.comment.unshift(newComment);
       paper.comment.unshift(newComment);
 
       paper.save().then(paper => res.json(paper));

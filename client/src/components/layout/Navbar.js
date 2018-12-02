@@ -4,13 +4,13 @@ import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { logoutUser } from "../../actions/authActions";
 import { clearCurrentProfile } from "../../actions/profileActions";
-import { clearCurrentPaper } from "../../actions/paperActions";
+// import { clearCurrentPaper } from "../../actions/paperActions";
 
 class Navbar extends Component {
   onLogoutClick(e) {
     e.preventDefault();
     this.props.clearCurrentProfile();
-    this.props.clearCurrentPaper();
+    // this.props.clearCurrentPaper();
     this.props.logoutUser();
   }
 
@@ -24,6 +24,7 @@ class Navbar extends Component {
             Post Feed
           </Link>
         </li>
+
         <li className="nav-item">
           <Link className="nav-link" to="/dashboard">
             Dashboard
@@ -123,5 +124,6 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { logoutUser, clearCurrentProfile, clearCurrentPaper }
+  { logoutUser, clearCurrentProfile }
 )(Navbar);
+//clearCurrentPaper

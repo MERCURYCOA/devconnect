@@ -11,30 +11,30 @@ class Comment extends Component {
 
   render() {
     const comment = this.props.comment;
-    if (this.props.comment) {
-      comment.map(cmt => (
-        <tr key={cmt._id}>
-          <td>{cmt.company}</td>
-          <td>{cmt.title}</td>
-          <td>
-            <Moment format="YYYY/MM/DD">{cmt.from}</Moment> -
-            {cmt.to === null ? (
-              " Present"
-            ) : (
-              <Moment format="YYYY/MM/DD">{cmt.to}</Moment>
-            )}
-          </td>
-          <td>
-            <button
-              onClick={this.onDeleteClick.bind(this, cmt._id)}
-              className="btn btn-danger"
-            >
-              Delete
-            </button>
-          </td>
-        </tr>
-      ));
-    }
+    //if (this.props.comment) {
+    comment.map(cmt => (
+      <tr key={cmt._id}>
+        <td>{cmt.company}</td>
+        <td>{cmt.title}</td>
+        <td>
+          <Moment format="YYYY/MM/DD">{cmt.from}</Moment> -
+          {cmt.to === null ? (
+            " Present"
+          ) : (
+            <Moment format="YYYY/MM/DD">{cmt.to}</Moment>
+          )}
+        </td>
+        <td>
+          <button
+            onClick={this.onDeleteClick.bind(this, cmt._id)}
+            className="btn btn-danger"
+          >
+            Delete
+          </button>
+        </td>
+      </tr>
+    ));
+    //}
 
     return (
       <div>

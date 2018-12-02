@@ -29,7 +29,9 @@ import AddEducation from "./components/add-credentials/AddEducation";
 import Profiles from "./components/profiles/Profiles";
 import Profile from "./components/profile/Profile";
 import Posts from "./components/posts/Posts";
+// import Pasts from "./components/pasts/Pasts";
 import Post from "./components/post/Post";
+// import Past from "./components/past/Past";
 import Paper from "./components/paper/Paper";
 import Papers from "./components/papers/Papers";
 import NotFound from "./components/not-found/NotFound";
@@ -75,7 +77,6 @@ class App extends Component {
 
               <Route exact path="/profile/:handle" component={Profile} />
 
-              
               <Route exact path="/paper/:handle" component={Paper} />
 
               <Switch>
@@ -130,9 +131,11 @@ class App extends Component {
               <Switch>
                 <PrivateRoute exact path="/feed" component={Posts} />
               </Switch>
+
               <Switch>
                 <PrivateRoute exact path="/post/:id" component={Post} />
               </Switch>
+
               <Route exact path="/not-found" component={NotFound} />
             </div>
             <Footer />

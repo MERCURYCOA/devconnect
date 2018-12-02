@@ -6,7 +6,6 @@ import isEmpty from "../../validation/is-empty";
 class PaperItem extends Component {
   render() {
     const { paper } = this.props;
-
     return (
       <div className="card card-body bg-light mb-3">
         <div className="row">
@@ -23,7 +22,7 @@ class PaperItem extends Component {
               {isEmpty(paper.location) ? null : <span>{paper.location}</span>}
             </p>
             <Link to={`/paper/${paper.handle}`} className="btn btn-info">
-              View Papers
+              View Paper
             </Link>
           </div>
           <div className="col-md-4 d-none d-md-block">
