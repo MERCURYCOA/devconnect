@@ -7,7 +7,12 @@ const path = require("path");
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profile");
 const posts = require("./routes/api/posts");
+<<<<<<< HEAD
 const uploader = require("./routes/api/uploader");
+=======
+// const pasts = require("./routes/api/pasts");
+const paper = require("./routes/api/paper");
+>>>>>>> f96d156021edcf4b6ff15af47f4f066d193358ee
 
 const app = express();
 
@@ -34,7 +39,12 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/profile", profile);
 app.use("/api/posts", posts);
+<<<<<<< HEAD
 app.use("/api/uploader", uploader);
+=======
+// app.use("/api/pasts", pasts);
+app.use("/api/paper", paper);
+>>>>>>> f96d156021edcf4b6ff15af47f4f066d193358ee
 
 // Server static assets if in production
 if (process.env.NODE_ENV === "production") {

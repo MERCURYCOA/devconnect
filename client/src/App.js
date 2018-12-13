@@ -5,6 +5,11 @@ import setAuthToken from "./utils/setAuthToken";
 import { setCurrentUser, logoutUser } from "./actions/authActions";
 import { clearCurrentProfile } from "./actions/profileActions";
 
+<<<<<<< HEAD
+=======
+import { clearCurrentPaper } from "./actions/paperActions";
+
+>>>>>>> f96d156021edcf4b6ff15af47f4f066d193358ee
 import { Provider } from "react-redux";
 import store from "./store";
 
@@ -16,6 +21,7 @@ import Landing from "./components/layout/Landing";
 import Register from "./components/auth/Register";
 import Login from "./components/auth/Login";
 import Dashboard from "./components/dashboard/Dashboard";
+<<<<<<< HEAD
 import CreateProfile from "./components/create-profile/CreateProfile";
 import EditProfile from "./components/edit-profile/EditProfile";
 import AddExperience from "./components/add-credentials/AddExperience";
@@ -25,6 +31,24 @@ import Profile from "./components/profile/Profile";
 import Uploader from "./components/uploader/Uploader";
 import Posts from "./components/posts/Posts";
 import Post from "./components/post/Post";
+=======
+import Mypaper from "./components/mypaper/Mypaper";
+
+import CreateProfile from "./components/create-profile/CreateProfile";
+import CreatePaper from "./components/create-paper/CreatePaper";
+import EditProfile from "./components/edit-profile/EditProfile";
+import AddExperience from "./components/add-credentials/AddExperience";
+import AddComment from "./components/add-credentials/AddComment";
+import AddEducation from "./components/add-credentials/AddEducation";
+import Profiles from "./components/profiles/Profiles";
+import Profile from "./components/profile/Profile";
+import Posts from "./components/posts/Posts";
+// import Pasts from "./components/pasts/Pasts";
+import Post from "./components/post/Post";
+// import Past from "./components/past/Past";
+import Paper from "./components/paper/Paper";
+import Papers from "./components/papers/Papers";
+>>>>>>> f96d156021edcf4b6ff15af47f4f066d193358ee
 import NotFound from "./components/not-found/NotFound";
 
 import "./App.css";
@@ -45,6 +69,8 @@ if (localStorage.jwtToken) {
     store.dispatch(logoutUser());
     // Clear current Profile
     store.dispatch(clearCurrentProfile());
+    // Clear current Paper
+    store.dispatch(clearCurrentPaper());
     // Redirect to login
     window.location.href = "/login";
   }
@@ -62,16 +88,34 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <Route exact path="/login" component={Login} />
               <Route exact path="/profiles" component={Profiles} />
+              <Route exact path="/papers" component={Papers} />
+
               <Route exact path="/profile/:handle" component={Profile} />
+<<<<<<< HEAD
               <Route exact path="/uploader" component={Uploader} />
+=======
+
+              <Route exact path="/paper/:handle" component={Paper} />
+
+>>>>>>> f96d156021edcf4b6ff15af47f4f066d193358ee
               <Switch>
                 <PrivateRoute exact path="/dashboard" component={Dashboard} />
+              </Switch>
+              <Switch>
+                <PrivateRoute exact path="/mypaper" component={Mypaper} />
               </Switch>
               <Switch>
                 <PrivateRoute
                   exact
                   path="/create-profile"
                   component={CreateProfile}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/create-paper"
+                  component={CreatePaper}
                 />
               </Switch>
               <Switch>
@@ -88,6 +132,14 @@ class App extends Component {
                   component={AddExperience}
                 />
               </Switch>
+
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-comment"
+                  component={AddComment}
+                />
+              </Switch>
               <Switch>
                 <PrivateRoute
                   exact
@@ -98,9 +150,11 @@ class App extends Component {
               <Switch>
                 <PrivateRoute exact path="/feed" component={Posts} />
               </Switch>
+
               <Switch>
                 <PrivateRoute exact path="/post/:id" component={Post} />
               </Switch>
+
               <Route exact path="/not-found" component={NotFound} />
             </div>
             <Footer />
